@@ -89,7 +89,7 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext
             {
                 //ref不为空
                 //递归调用getBean方法
-                Object bean1 = this.getBean(name);
+                Object bean1 = this.getBean(ref);
                 //获取对应的set方法的名称
                 String setMethodName = StringUtils.toSetMethodName(propertyName);
                 //获取所有方法
