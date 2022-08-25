@@ -18,16 +18,25 @@ import java.util.Map;
  * Description(描述)： 无
  */
 
+
 public class SimpleBeanDefinitionRegistry implements BeanDefinitionRegistry
 {
 
     private final Map<String, BeanDefinition> beanDefinitionMap;
 
+    /**
+     * Instantiates a new Simple bean definition registry.
+     */
     public SimpleBeanDefinitionRegistry()
     {
         this.beanDefinitionMap = new HashMap<>();
     }
 
+    /**
+     * Instantiates a new Simple bean definition registry.
+     *
+     * @param beanDefinitionMap the bean definition map
+     */
     public SimpleBeanDefinitionRegistry(Map<String, BeanDefinition> beanDefinitionMap)
     {
         //this.beanDefinitionMap = Objects.requireNonNullElseGet(beanDefinitionMap, HashMap::new);
@@ -45,36 +54,56 @@ public class SimpleBeanDefinitionRegistry implements BeanDefinitionRegistry
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)
     {
-
+        if (beanName == null)
+        {
+            return;
+        }
+        if (beanDefinition == null)
+        {
+            return;
+        }
+        beanDefinitionMap.put(beanName, beanDefinition);
     }
 
     @Override
     public void removeBeanDefinition(String beanName) throws Exception
     {
-
+        if (beanName == null)
+        {
+            return;
+        }
+        beanDefinitionMap.remove(beanName);
     }
 
     @Override
     public BeanDefinition getBeanDefinition(String beanName) throws Exception
     {
-        return null;
+        if (beanName == null)
+        {
+            return null;
+        }
+        return beanDefinitionMap.get(beanName);
     }
 
     @Override
     public boolean containsBeanDefinition(String beanName)
     {
-        return false;
+        if (beanName == null)
+        {
+            return false;
+        }
+        return beanDefinitionMap.containsKey(beanName);
     }
 
     @Override
     public int getBeanDefinitionCount()
     {
-        return 0;
+        return beanDefinitionMap.size();
     }
 
     @Override
     public String[] getBeanDefinitionNames()
     {
-        return new String[0];
+        return beanDefinitionMap.keySet().toArray(new String[0]);
     }
 }
