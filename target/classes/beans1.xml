@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <bean id="userDao" class="mao.customize_use.UserDaoImpl"/>
+
+    <bean id="userService" class="mao.customize_use.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+</beans>
