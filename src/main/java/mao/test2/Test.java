@@ -23,5 +23,7 @@ public class Test
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans2.xml");
         Student student = applicationContext.getBean("student", Student.class);
         System.out.println(student);
+        School school = student.getSchool();
+        System.out.println(school);
     }
 }
