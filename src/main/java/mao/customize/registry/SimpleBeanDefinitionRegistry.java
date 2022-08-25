@@ -62,6 +62,11 @@ public class SimpleBeanDefinitionRegistry implements BeanDefinitionRegistry
         {
             return;
         }
+        //判断id是否唯一
+        if (this.beanDefinitionMap.containsKey(beanName))
+        {
+            throw new RuntimeException("bean的id不唯一！！！ 不唯一的id为" + beanName);
+        }
         beanDefinitionMap.put(beanName, beanDefinition);
     }
 

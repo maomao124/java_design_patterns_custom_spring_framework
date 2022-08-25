@@ -20,7 +20,7 @@ public interface BeanDefinitionRegistry
     /**
      * 注册BeanDefinition对象到注册表中
      *
-     * @param beanName       bean的名称
+     * @param beanName       bean的名称（bean的id属性）
      * @param beanDefinition BeanDefinition对象
      */
     void registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
@@ -28,7 +28,7 @@ public interface BeanDefinitionRegistry
     /**
      * 从注册表中删除指定名称的BeanDefinition对象
      *
-     * @param beanName bean的名称
+     * @param beanName bean的名称（bean的id属性）
      * @throws Exception 异常
      */
     void removeBeanDefinition(String beanName) throws Exception;
@@ -36,7 +36,7 @@ public interface BeanDefinitionRegistry
     /**
      * 根据名称从注册表中获取BeanDefinition对象
      *
-     * @param beanName bean的名称
+     * @param beanName bean的名称（bean的id属性）
      * @return BeanDefinition对象
      * @throws Exception 异常
      */
@@ -45,7 +45,7 @@ public interface BeanDefinitionRegistry
     /**
      * 根据bean的名称判断是否包含指定的BeanDefinition对象
      *
-     * @param beanName bean的名称
+     * @param beanName bean的名称（bean的id属性）
      * @return boolean类型
      */
     boolean containsBeanDefinition(String beanName);
