@@ -5,6 +5,9 @@ import mao.customize.pojo.MutablePropertyValues;
 import mao.customize.pojo.PropertyValue;
 import mao.customize.reader.XmlBeanDefinitionReader;
 import mao.customize.registry.BeanDefinitionRegistry;
+import mao.customize.utils.StringUtils;
+
+import java.lang.reflect.Method;
 
 /**
  * Project name(项目名称)：java设计模式_自定义Spring框架
@@ -81,20 +84,63 @@ public class ClassPathXmlApplicationContext extends AbstractApplicationContext
             //值
             String value = propertyValue.getValue();
 
+            //标签有ref属性
             if (ref != null && !"".equals(ref))
             {
                 //ref不为空
                 //递归调用getBean方法
                 Object bean1 = this.getBean(name);
+                //获取对应的set方法的名称
+                String setMethodName = StringUtils.toSetMethodName(propertyName);
+                //获取所有方法
+                Method[] methods = aClass.getMethods();
+                //遍历
+                for (Method method : methods)
+                {
+                    if (method.getName().equals(setMethodName))
+                    {
+                        //方法名称一致
+                        //执行bean对象的set方法，将对象bean1注入到bean对象中
+                        method.invoke(bean, bean1);
+                    }
+                }
+            }
+
+            //标签有value属性，不用管既有ref又有value的情况，比如<property name="userDao" ref="userDao" value="hello"/>
+            if (value != null && !"".equals(value))
+            {
+                //获取对应的set方法的名称
+                String setMethodName = StringUtils.toSetMethodName(propertyName);
+                //获取所有方法
+                Method[] methods = aClass.getMethods();
+                //遍历
+                for (Method method : methods)
+                {
+                    if (method.getName().equals(setMethodName))
+                    {
+                        //方法名称一致
+                        //执行bean对象的set方法，将value的值注入到bean对象中
+                        method.invoke(bean, value);
+                    }
+                }
             }
         }
-
-        return null;
+        //放入到map集合里
+        this.singletonObjects.put(name, bean);
+        //返回
+        return bean;
     }
 
     @Override
     public <T> T getBean(String name, Class<? extends T> clazz) throws Exception
     {
-        return null;
+        //获取bean
+        Object bean = this.getBean(name);
+        if (bean == null)
+        {
+            return null;
+        }
+        //转换再返回
+        return clazz.cast(bean);
     }
 }
