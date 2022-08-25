@@ -109,16 +109,16 @@ public class MutablePropertyValues implements Iterable<PropertyValue>
         }
         for (int i = 0; i < this.propertyValueList.size(); i++)
         {
-            //从集合里获取，判断是否有名字冲突的，也就是id，id唯一
+            //从集合里获取，判断是否有名字冲突的，也就是属性的名称，名称对应一个set方法，应该唯一
             PropertyValue propertyValue1 = this.propertyValueList.get(i);
             if (propertyValue1.getName().equals(propertyValue.getName()))
             {
-                //id冲突
+                //属性名称冲突
                 //这里直接就替换
                 this.propertyValueList.set(i, new PropertyValue(propertyValue.getName(), propertyValue.getRef(), propertyValue.getValue()));
             }
         }
-        //没有id冲突，直接添加
+        //没有名称冲突，直接添加
         this.propertyValueList.add(propertyValue);
         return this;
     }
